@@ -1,0 +1,27 @@
+
+for %X in (*.shp) do ogr2ogr -skipfailures -clipsrc
+c:\data\PhiladelphiaBaseLayers\clipFeature\city_limits.shp
+c:\data\PhiladelphiaBaseLayers\clipped\%X c:\data\PhiladelphiaBaseLayers\%X
+
+cd c:\data\PhiladelphiaBaseLayers\clipped
+
+for %X in (*.shp) do ogr2ogr -t_srs EPSG:3857 -s_srs EPSG:4326
+c:\data\PhiladelphiaBaseLayers\clippedAndProjected\%X
+c:\data\PhiladelphiaBaseLayers\clipped\%X
+
+
+OR
+
+cd /d c:\data\PhiladelphiaBaseLayers
+set ogr2ogrPath="c:\program files\QGIS Essen\bin\ogr2ogr.exe"
+set GDAL_DATA=C:\program files\QGIS Essen\share\gdal
+
+for %%X in (*.shp) do %ogr2ogrPath% -skipfailures -clipsrc
+c:\data\PhiladelphiaBaseLayers\clipFeature\city_limits.shp
+c:\data\PhiladelphiaBaseLayers\clipped\%%X c:\data\PhiladelphiaBaseLayers\%%X
+
+for %%X in (*.shp) do %ogr2ogrPath% -skipfailures -s_srs EPSG:4326 -t_srs EPSG:3857
+c:\data\PhiladelphiaBaseLayers\clippedAndProjected\%%X
+c:\data\PhiladelphiaBaseLayers\clipped\%%X
+
+make as a bat file -> save as -> clipAndProject.bat
